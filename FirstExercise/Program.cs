@@ -26,28 +26,34 @@ namespace FirstExercise
 
             using (var conn = new OracleConnection(connString))
             {
-                //string cmdInsert = "INSERT INTO PERSON (ID,FULLNAME,DOB, SALARY, DEPARTMENT, NOTE) VALUES (:ID, :FULLNAME, :DOB, :SALARY, :DEPARTMENT, :NOTE)";
                 conn.Open();
-                //using (var cmd = new OracleCommand(cmdInsert, conn))
-                //{
-                //    string idParam = "10005";
-                //    string fullNameParam = "Thien An";
-                //    string dobParam = "10/DEC/2000";
-                //    string salaryParam = "1333.05";
-                //    string departmentParam = "BA";
-                //    string noteParam = "Gorgous";
+                string cmdInsert = "INSERT INTO PERSON (ID,FULLNAME,DOB, SALARY, DEPARTMENT, NOTE) VALUES (:ID, :FULLNAME, :DOB, :SALARY, :DEPARTMENT, :NOTE)";
 
-                //    cmd.Parameters.Add(":ID", idParam);
-                //    cmd.Parameters.Add(":FULLNAME", fullNameParam);
-                //    cmd.Parameters.Add(":DOB", dobParam);
-                //    cmd.Parameters.Add(":SALARY", salaryParam);
-                //    cmd.Parameters.Add(":DEPARTMENT", departmentParam);
-                //    cmd.Parameters.Add(":NOTE", noteParam);
+                using (var cmd = new OracleCommand(cmdInsert, conn))
+                {
+                    string idParam = "10005";
+                    string fullNameParam = "Thien An";
+                    string dobParam = "10/DEC/2000";
+                    string salaryParam = "1333.05";
+                    string departmentParam = "BA";
+                    string noteParam = "Gorgous";
+                    try
+                    {
+                        cmd.Parameters.Add(":ID", idParam);
+                        cmd.Parameters.Add(":FULLNAME", fullNameParam);
+                        cmd.Parameters.Add(":DOB", dobParam);
+                        cmd.Parameters.Add(":SALARY", salaryParam);
+                        cmd.Parameters.Add(":DEPARTMENT", departmentParam);
+                        cmd.Parameters.Add(":NOTE", noteParam);
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch
+                    {
+                        Console.WriteLine("This ID was exist!");
+                    }
+                }
 
-                //    cmd.ExecuteNonQuery();
-                //}
-
-                string cmdSelect = "SELECT * FROM PERSON";
+                string cmdSelect = "SELECT ID,FULLNAME,DOB,SALARY,DEPARTMENT,NOTE FROM PERSON WHERE ID = '10005' ";
                 using (var cmd = new OracleCommand(cmdSelect, conn))
                 {   
                     var reader = cmd.ExecuteReader();
@@ -58,13 +64,18 @@ namespace FirstExercise
 
                 }
 
-
-
-                string cmdUpdate = "UPDATE PERSON SET ID = '11111' , FULLNAME = 'NONE' WHERE ID = '10001'";
-                using (var cmd = new OracleCommand(cmdUpdate, conn))
+                try
                 {
-                    var rowEffect = cmd.ExecuteNonQuery();
-                    Console.WriteLine($"Updated = {rowEffect} row");
+                    string cmdUpdate = "UPDATE PERSON SET ID = '11111' , FULLNAME = 'NONE' WHERE ID = '10001'";
+                    using (var cmd = new OracleCommand(cmdUpdate, conn))
+                    {
+                        var rowEffect = cmd.ExecuteNonQuery();
+                        Console.WriteLine($"Updated = {rowEffect} row");
+                    }
+                }
+                catch 
+                {
+                    Console.WriteLine("Exception: This ID not exist => not necessary to update");
                 }
 
 
@@ -80,7 +91,6 @@ namespace FirstExercise
                     {
                         Console.WriteLine("Exception: " + x.Message);
                     }
-                    
                 }
                 Console.ReadLine();
 

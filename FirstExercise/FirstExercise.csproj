@@ -56,5 +56,15 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBCrud\DBCrud.csproj">
+      <Project>{8e0c2d43-d4bc-47db-ac1b-de139938b610}</Project>
+      <Name>DBCrud</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbFirst\DbFirst.csproj">
+      <Project>{a5f4c165-d48a-4dc2-aba9-e065283c2b09}</Project>
+      <Name>DbFirst</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
