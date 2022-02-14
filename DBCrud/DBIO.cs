@@ -36,9 +36,9 @@ namespace DBCrud
                 Console.WriteLine("Add success!");
 
             }
-            catch
+            catch(Exception e)
             {
-                Console.WriteLine("ID was exist!");
+                Console.WriteLine(e.Message);
             }
         }
         public void Update(PERSON person)
